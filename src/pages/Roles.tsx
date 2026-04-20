@@ -6,6 +6,7 @@ import { ErrorState, LoadingState } from "../components/LoadState";
 import { ClassBadge } from "../components/ClassBadge";
 import { ClassIcon } from "../components/ClassIcon";
 import { FilterBar } from "../components/FilterBar";
+import { PageHero } from "../components/PageHero";
 import { tierColorVar } from "../data/tiering";
 import { allClassRoleScores, roleScoreFor } from "../data/classScores";
 import type { Build, ClassName, Season } from "../data/types";
@@ -79,17 +80,18 @@ export function Roles() {
 
   return (
     <div>
-      <div className="mb-4">
-        <h1 className="heading-gold text-3xl sm:text-4xl mb-1">By Role</h1>
-        <p className="text-stone-400 text-sm">
-          Mapping is ranked by{" "}
-          <span className="text-d2-gold">blended role score</span> — derived
-          from actual MPM data. Starter and Bossing reflect{" "}
-          <span className="text-d2-gold">Dark Humility's class curation</span>
-          {" "}and are NOT derived from MPM (MPM is a mapping metric — it does
-          not measure starter viability or single-target boss performance).
-        </p>
-      </div>
+      <PageHero
+        title="By Role"
+        subtitle="Mapping · League Starter · Bossing"
+      />
+      <p className="text-stone-400 text-sm text-center max-w-3xl mx-auto mb-4">
+        Mapping is ranked by{" "}
+        <span className="text-d2-gold">blended role score</span> — derived
+        from actual MPM data. Starter and Bossing reflect{" "}
+        <span className="text-d2-gold">Dark Humility's class curation</span>
+        {" "}and are NOT derived from MPM (MPM is a mapping metric — it does
+        not measure starter viability or single-target boss performance).
+      </p>
       <FilterBar
         total={data.builds.length}
         visible={filtered.length}

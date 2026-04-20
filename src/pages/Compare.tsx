@@ -8,6 +8,7 @@ import { DensityBadge } from "../components/DensityBadge";
 import { SeasonPill } from "../components/SeasonPill";
 import { ShareButton } from "../components/ShareButton";
 import { ExportPngButton } from "../components/ExportPngButton";
+import { PageHero } from "../components/PageHero";
 import { tierColorVar } from "../data/tiering";
 import { roleScoreFor } from "../data/classScores";
 import type { Build, MapRun } from "../data/types";
@@ -29,18 +30,23 @@ export function Compare() {
 
   if (builds.length === 0) {
     return (
-      <div className="max-w-2xl mx-auto panel p-8 text-center">
-        <h1 className="heading-gold text-3xl mb-2">Compare</h1>
-        <p className="text-stone-400 mb-4">
-          Pin up to {MAX_PINS} builds from the tier list to compare them
-          side-by-side.
-        </p>
-        <Link
-          to="/"
-          className="inline-block px-4 py-2 panel-hi hover:border-d2-gold text-d2-gold uppercase tracking-wider text-sm"
-        >
-          Browse tier list →
-        </Link>
+      <div>
+        <PageHero
+          title="Compare"
+          subtitle="Pin up to 3 builds, side by side"
+        />
+        <div className="max-w-2xl mx-auto panel p-8 text-center">
+          <p className="text-stone-400 mb-4">
+            Pin up to {MAX_PINS} builds from the tier list to compare them
+            side-by-side.
+          </p>
+          <Link
+            to="/"
+            className="inline-block px-4 py-2 panel-hi hover:border-d2-gold text-d2-gold uppercase tracking-wider text-sm"
+          >
+            Browse tier list →
+          </Link>
+        </div>
       </div>
     );
   }
@@ -51,26 +57,23 @@ export function Compare() {
 
   return (
     <div>
-      <div className="flex items-center justify-between mb-4 flex-wrap gap-3">
-        <div>
-          <h1 className="heading-gold text-3xl sm:text-4xl">Compare</h1>
-          <p className="text-stone-400 text-sm">
-            {builds.length} / {MAX_PINS} builds pinned
-          </p>
-        </div>
-        <div className="flex items-center gap-2" data-export-ignore>
-          <ShareButton title="Copy link to share this comparison" />
-          <ExportPngButton
-            targetRef={exportRef}
-            filename={`pd2-compare-${builds.map((b) => b.id).join("-vs-")}.png`}
-          />
-          <button
-            onClick={clear}
-            className="px-3 py-1 text-xs uppercase tracking-wider font-mono rounded-sm border border-d2-red text-d2-red hover:bg-d2-red hover:text-black transition-colors"
-          >
-            Clear all
-          </button>
-        </div>
+      <PageHero
+        title="Compare"
+        subtitle="Pin up to 3 builds, side by side"
+        note={`${builds.length} / ${MAX_PINS} builds pinned`}
+      />
+      <div className="flex items-center justify-end gap-2 mb-4" data-export-ignore>
+        <ShareButton title="Copy link to share this comparison" />
+        <ExportPngButton
+          targetRef={exportRef}
+          filename={`pd2-compare-${builds.map((b) => b.id).join("-vs-")}.png`}
+        />
+        <button
+          onClick={clear}
+          className="px-3 py-1 text-xs uppercase tracking-wider font-mono rounded-sm border border-d2-red text-d2-red hover:bg-d2-red hover:text-black transition-colors"
+        >
+          Clear all
+        </button>
       </div>
 
       <div className="overflow-x-auto scrollbar-thin" ref={exportRef}>

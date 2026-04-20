@@ -18,6 +18,7 @@ import { ErrorState, LoadingState } from "../components/LoadState";
 import { CLASSES, TIERS, type Build, type ClassName, type Tier } from "../data/types";
 import { tierColorVar } from "../data/tiering";
 import { classColor, ClassBadge } from "../components/ClassBadge";
+import { PageHero } from "../components/PageHero";
 import { useFilters } from "../store/filters";
 
 export function Stats() {
@@ -35,12 +36,15 @@ export function Stats() {
 
   return (
     <div>
-      <h1 className="heading-gold text-3xl sm:text-4xl mb-1">Statistics</h1>
-      <p className="text-stone-400 text-sm mb-6">
-        Aggregate view of {data.builds.length} tested builds. Toggle "Apply
-        handicap" on the tierlist page to switch between raw-data and
-        final-display tier placement; the scatter & class averages reflect raw
-        normalized MPM either way.
+      <PageHero
+        title="Statistics"
+        subtitle="Aggregate view across all tested builds"
+      />
+      <p className="text-stone-400 text-sm text-center max-w-3xl mx-auto mb-6">
+        {data.builds.length} builds in the dataset. Toggle "Apply handicap" on
+        the tierlist page to switch between raw-data and final-display tier
+        placement; the scatter & class averages reflect raw normalized MPM
+        either way.
       </p>
 
       <div className="grid lg:grid-cols-2 gap-4">

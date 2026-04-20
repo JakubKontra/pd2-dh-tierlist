@@ -7,6 +7,7 @@ import { FilterBar } from "../components/FilterBar";
 import { ErrorState, LoadingState } from "../components/LoadState";
 import { ShareButton } from "../components/ShareButton";
 import { ExportPngButton } from "../components/ExportPngButton";
+import { PageHero } from "../components/PageHero";
 
 export function Tierlist() {
   const { data, loading, error, refetch } = useTierlist();
@@ -53,21 +54,25 @@ export function Tierlist() {
 
   return (
     <div>
-      <h1 className="heading-gold text-center mb-3 text-5xl sm:text-[72px] leading-tight">
-        Dark Humility Season 13 - Betrayal Tierlist
-      </h1>
-      <div className="mb-4 flex flex-wrap items-start gap-3">
-        <div className="flex-1 min-w-[240px]">
-          <p className="text-stone-400 text-sm">
-            Build tier list by{" "}
-            <span className="text-d2-gold">Dark Humility</span> •{" "}
-            {data.builds.length} builds tested • updated live from Google Sheets
-          </p>
-        </div>
-        <div className="flex items-center gap-2" data-export-ignore>
-          <ShareButton title="Copy link (preserves your class, search & handicap filters)" />
-          <ExportPngButton targetRef={exportRef} filename="pd2-s13-tierlist.png" />
-        </div>
+      <PageHero
+        title="Dark Humility"
+        subtitle={
+          <>
+            Season 13 Betrayal — PD2 Late-Game Mapping Performance{" "}
+            <span className="text-stone-500 italic not-tracking-wide">
+              (Tentative)
+            </span>
+          </>
+        }
+        note={
+          <>
+            {data.builds.length} builds tested · updated live from Google Sheets
+          </>
+        }
+      />
+      <div className="mb-4 flex justify-end gap-2" data-export-ignore>
+        <ShareButton title="Copy link (preserves your class, search & handicap filters)" />
+        <ExportPngButton targetRef={exportRef} filename="pd2-s13-tierlist.png" />
       </div>
       <FilterBar
         total={data.builds.length}

@@ -1,10 +1,14 @@
 import { SHEET_URL } from "../data/fetchSheet";
 import { SeasonLegend } from "../components/SeasonLegend";
+import { PageHero } from "../components/PageHero";
 
 export function About() {
   return (
     <div className="max-w-3xl mx-auto prose-invert">
-      <h1 className="heading-gold text-3xl sm:text-4xl mb-4">About this tier list</h1>
+      <PageHero
+        title="About"
+        subtitle="Methodology · Credits · Legend"
+      />
 
       <section className="panel p-5 mb-4 space-y-3 text-stone-300">
         <p>
