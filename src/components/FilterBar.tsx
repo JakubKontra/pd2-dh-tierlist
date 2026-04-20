@@ -20,13 +20,15 @@ export function FilterBar({ total, visible }: { total: number; visible: number }
     { k: "all", label: "All", title: "Show every build" },
     {
       k: "retested",
-      label: "RT'd",
-      title: "Retested after closed-beta patch notes",
+      label: "β-retest",
+      title:
+        "Flagged (RT'd) in the sheet: retested after closed-beta patch notes to verify specific nerf/buff changes.",
     },
     {
       k: "not-retested",
-      label: "Not RT'd",
-      title: "Not retested — may reflect older beta data",
+      label: "No β-retest",
+      title:
+        "Not tagged (RT'd). These are still S13 tests for tan-font builds; older-season carryovers (other font colors) are not distinguishable via the CSV export.",
     },
   ];
 
@@ -68,9 +70,12 @@ export function FilterBar({ total, visible }: { total: number; visible: number }
           onChange={(e) => setSearch(e.target.value)}
           className="panel-hi px-3 py-1 text-sm rounded-sm outline-none focus:border-d2-gold placeholder:text-stone-600 text-stone-100 min-w-[180px] flex-1 sm:flex-none sm:w-[240px]"
         />
-        <div className="flex items-center gap-1">
+        <div
+          className="flex items-center gap-1"
+          title="Closed-beta retest status — whether the build was retested after closed-beta patch notes"
+        >
           <span className="text-[10px] uppercase tracking-wider text-stone-500 mr-1">
-            Tested
+            β-retest
           </span>
           {retestedOpts.map((o) => {
             const active = retestedFilter === o.k;

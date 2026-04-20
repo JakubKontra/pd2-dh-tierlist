@@ -49,8 +49,12 @@ export function About() {
           v="The build was tested on a Fortified-affix map (optimal for many builds). Does not affect scoring, just context."
         />
         <Term
-          k="RT'd Retested"
-          v="Build was retested after the closed-beta patch notes were published. Untagged builds still reflect older test data."
+          k="(RT'd) β-retest"
+          v="Build was retested after the closed-beta patch notes to verify a specific nerf or buff. It is NOT a general freshness flag — the vast majority of tan-font entries in the sheet were tested this season (S13) even without this marker."
+        />
+        <Term
+          k="Season tested (font color in sheet)"
+          v="In the source Google Sheet, row font color indicates which season the build was tested in: tan = S13, green = S12, orange = S11, white = S10. The CSV export does not include font color, so this site currently treats every build as S13 by default. If you see an older-looking MPM number, check the sheet directly."
         />
       </div>
 

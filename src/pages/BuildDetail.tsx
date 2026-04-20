@@ -77,8 +77,11 @@ export function BuildDetail() {
               </span>
             )}
             {build.retested === true && (
-              <span className="px-2 py-0.5 font-mono text-xs rounded-sm border border-lime-700 text-lime-400">
-                Retested (closed beta)
+              <span
+                className="px-2 py-0.5 font-mono text-xs rounded-sm border border-lime-700 text-lime-400"
+                title="Retested after closed-beta patch notes to verify specific nerf/buff changes"
+              >
+                β-retest (post-beta)
               </span>
             )}
             <DensityBadge profile={build.densityProfile} stdDev={build.normStdDev} />

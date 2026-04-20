@@ -43,9 +43,9 @@ export function BuildCard({ build }: { build: Build }) {
             <span
               className="text-[10px] font-mono px-1 rounded-sm"
               style={{ color: "#7cb342", border: "1px solid #7cb342" }}
-              title="Retested with closed-beta patch notes"
+              title="β-retest: retested after closed-beta patch notes to verify specific nerf/buff changes"
             >
-              RT
+              β
             </span>
           )}
           <DensityBadge
