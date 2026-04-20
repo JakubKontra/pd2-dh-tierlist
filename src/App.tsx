@@ -61,8 +61,24 @@ function Footer() {
     <footer className="border-t border-border mt-16 py-6 px-4 text-center text-xs text-stone-500">
       <p>
         Tier list methodology & testing by{" "}
-        <span className="text-d2-gold">Dark Humility</span>. Data pulled live
-        from the public Google Sheet.
+        <a
+          href="https://www.twitch.tv/darkhumility"
+          target="_blank"
+          rel="noreferrer"
+          className="text-d2-gold hover:underline"
+        >
+          Dark Humility
+        </a>{" "}
+        (
+        <a
+          href="https://discord.gg/FVUjcVk"
+          target="_blank"
+          rel="noreferrer"
+          className="text-d2-unique hover:underline"
+        >
+          Discord
+        </a>
+        ). Data pulled live from the public Google Sheet.
       </p>
       <p className="mt-1">
         Fan project for{" "}

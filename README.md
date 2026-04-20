@@ -62,7 +62,7 @@ Vite builds to `dist/`. No base path is set in `vite.config.ts`, so the bundle d
 
 ## Credits
 
-- **Data, testing, methodology, tier placement** — [Dark Humility](https://docs.google.com/spreadsheets/d/1ipTsARndewEJaREWfcDeuCelKWpCEcFy9nrigp220_Y/edit). All scoring and tier decisions come from the sheet; this site is a viewer, not an editor.
+- **Data, testing, methodology, tier placement** — **Dark Humility** ([Twitch](https://www.twitch.tv/darkhumility) · [Discord](https://discord.gg/FVUjcVk) · [public sheet](https://docs.google.com/spreadsheets/d/1ipTsARndewEJaREWfcDeuCelKWpCEcFy9nrigp220_Y/edit)). All scoring and tier decisions come from the sheet; this site is a viewer, not an editor.
 - **Project Diablo 2** — [projectdiablo2.com](https://projectdiablo2.com). Fan project; not affiliated with Blizzard or the PD2 team.
 - **Site built by** — [Jakub Kontra](https://jakubkontra.com), PD2 player [thejimmycz](https://www.twitch.tv/thejimmycz) on Twitch.
 

@@ -61,6 +61,27 @@ export function About() {
           <span className="text-d2-gold font-bold">Dark Humility</span>.
         </p>
         <p>
+          Follow Dark Humility on{" "}
+          <a
+            href="https://www.twitch.tv/darkhumility"
+            target="_blank"
+            rel="noreferrer"
+            className="text-d2-gold hover:underline"
+          >
+            Twitch
+          </a>{" "}
+          and join the{" "}
+          <a
+            href="https://discord.gg/FVUjcVk"
+            target="_blank"
+            rel="noreferrer"
+            className="text-d2-gold hover:underline"
+          >
+            Discord community
+          </a>
+          .
+        </p>
+        <p>
           This site is a fan-made viewer. It does not modify or reinterpret the
           data — tier derivation follows the same formula used in the sheet. If
           you spot a discrepancy, please file an issue so the mapping can be
