@@ -53,11 +53,11 @@ export function Tierlist() {
 
   return (
     <div>
+      <h1 className="heading-gold text-center mb-3 text-5xl sm:text-[72px] leading-tight">
+        Dark Humility Season 13 - Betrayal Tierlist
+      </h1>
       <div className="mb-4 flex flex-wrap items-start gap-3">
         <div className="flex-1 min-w-[240px]">
-          <h1 className="heading-gold text-3xl sm:text-4xl mb-1">
-            Season 13 — Betrayal
-          </h1>
           <p className="text-stone-400 text-sm">
             Build tier list by{" "}
             <span className="text-d2-gold">Dark Humility</span> •{" "}
