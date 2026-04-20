@@ -6,10 +6,20 @@ import {
   type Build,
   type DensityProfile,
   type MapRun,
+  type Season,
   type Tier,
   type TierCutoffs,
   type Tierlist,
 } from "./types";
+
+function parseSeason(cell: unknown): Season | null {
+  if (cell === null || cell === undefined) return null;
+  const s = String(cell).trim();
+  if (!s) return null;
+  const m = s.match(/\b(?:s(?:eason)?[\s-]*)?(10|11|12|13)\b/i);
+  if (!m) return null;
+  return `S${m[1]}` as Season;
+}
 
 interface ParsedTierTable {
   tierCutoffs: Map<Tier, number>;
@@ -188,6 +198,11 @@ export function parseTierlist(csv: string): Tierlist {
   );
   const dataStart = headerIdx === -1 ? 1 : headerIdx + 1;
 
+  const headerRow = headerIdx === -1 ? [] : rows[headerIdx];
+  const seasonColIdx = headerRow.findIndex((cell) =>
+    /^season\b/i.test((cell ?? "").toString().trim())
+  );
+
   const table = extractTierTable(rows.slice(dataStart, dataStart + 20));
   const { cutoffs, tierLowerBounds } = buildCutoffsForDerivation(table);
 
@@ -209,6 +224,8 @@ export function parseTierlist(csv: string): Tierlist {
 
     const { displayName, handicap, retested } = parseBuildMeta(nameCell);
     const className = inferClass(displayName);
+    const season =
+      seasonColIdx >= 0 ? parseSeason(row[seasonColIdx]) : null;
 
     const maps: MapRun[] = [];
     const pushMap = (
@@ -264,6 +281,7 @@ export function parseTierlist(csv: string): Tierlist {
       className,
       handicap,
       retested,
+      season,
       maps,
       avgMpm,
       avgNormalizedMpm,

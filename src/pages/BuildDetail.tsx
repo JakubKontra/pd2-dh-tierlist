@@ -4,6 +4,7 @@ import { ErrorState, LoadingState } from "../components/LoadState";
 import { ClassBadge } from "../components/ClassBadge";
 import { DensityBadge } from "../components/DensityBadge";
 import { PinButton } from "../components/PinButton";
+import { SeasonPill } from "../components/SeasonPill";
 import { tierColorVar } from "../data/tiering";
 
 function stdDev(xs: number[]): number {
@@ -85,6 +86,7 @@ export function BuildDetail() {
               </span>
             )}
             <DensityBadge profile={build.densityProfile} stdDev={build.normStdDev} />
+            <SeasonPill season={build.season} size="md" />
 
             <span className="text-stone-500">
               Raw tier: <span className="text-stone-300">{build.tierRaw}</span>

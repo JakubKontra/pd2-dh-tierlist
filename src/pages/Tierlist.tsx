@@ -1,7 +1,7 @@
 import { useMemo, useRef } from "react";
 import { useTierlist } from "../data/fetchSheet";
 import { useFilters } from "../store/filters";
-import { TIERS, type Build, type Tier } from "../data/types";
+import { TIERS, type Build, type Season, type Tier } from "../data/types";
 import { TierRow } from "../components/TierRow";
 import { FilterBar } from "../components/FilterBar";
 import { ErrorState, LoadingState } from "../components/LoadState";
@@ -10,8 +10,16 @@ import { ExportPngButton } from "../components/ExportPngButton";
 
 export function Tierlist() {
   const { data, loading, error, refetch } = useTierlist();
-  const { classFilter, search, applyHandicap, retestedFilter } = useFilters();
+  const { classFilter, search, applyHandicap, retestedFilter, seasonFilter } =
+    useFilters();
   const exportRef = useRef<HTMLDivElement>(null);
+
+  const availableSeasons = useMemo<Set<Season>>(() => {
+    const set = new Set<Season>();
+    if (!data) return set;
+    for (const b of data.builds) if (b.season) set.add(b.season);
+    return set;
+  }, [data]);
 
   const filtered = useMemo<Build[]>(() => {
     if (!data) return [];
@@ -21,9 +29,10 @@ export function Tierlist() {
       if (q && !b.displayName.toLowerCase().includes(q)) return false;
       if (retestedFilter === "retested" && b.retested !== true) return false;
       if (retestedFilter === "not-retested" && b.retested === true) return false;
+      if (seasonFilter !== "all" && b.season !== seasonFilter) return false;
       return true;
     });
-  }, [data, classFilter, search, retestedFilter]);
+  }, [data, classFilter, search, retestedFilter, seasonFilter]);
 
   const byTier = useMemo(() => {
     const map = new Map<Tier, Build[]>();
@@ -60,7 +69,11 @@ export function Tierlist() {
           <ExportPngButton targetRef={exportRef} filename="pd2-s13-tierlist.png" />
         </div>
       </div>
-      <FilterBar total={data.builds.length} visible={filtered.length} />
+      <FilterBar
+        total={data.builds.length}
+        visible={filtered.length}
+        availableSeasons={availableSeasons}
+      />
       <div ref={exportRef} className="space-y-2">
         {TIERS.map((tier) => (
           <TierRow key={tier} tier={tier} builds={byTier.get(tier) ?? []} />

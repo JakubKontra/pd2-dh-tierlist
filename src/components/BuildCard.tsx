@@ -3,6 +3,7 @@ import type { Build } from "../data/types";
 import { ClassBadge, classColor } from "./ClassBadge";
 import { DensityBadge } from "./DensityBadge";
 import { PinButton } from "./PinButton";
+import { SeasonPill } from "./SeasonPill";
 
 function handicapLabel(h: number): string | null {
   if (!h) return null;
@@ -53,6 +54,7 @@ export function BuildCard({ build }: { build: Build }) {
             stdDev={build.normStdDev}
             variant="dot"
           />
+          <SeasonPill season={build.season} size="xs" />
         </div>
       </div>
       <div className="text-right shrink-0">

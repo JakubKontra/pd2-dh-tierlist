@@ -1,19 +1,35 @@
-import { CLASSES, type ClassName } from "../data/types";
+import { CLASSES, type ClassName, type Season } from "../data/types";
 import { useFilters, type RetestedFilter } from "../store/filters";
 import { classColor } from "./ClassBadge";
 import { ClassIcon } from "./ClassIcon";
+import { SeasonLegend } from "./SeasonLegend";
+import { SEASONS } from "../data/seasons";
 
-export function FilterBar({ total, visible }: { total: number; visible: number }) {
+export function FilterBar({
+  total,
+  visible,
+  availableSeasons,
+}: {
+  total: number;
+  visible: number;
+  availableSeasons?: Set<Season>;
+}) {
   const {
     classFilter,
     search,
     applyHandicap,
     retestedFilter,
+    seasonFilter,
     setClassFilter,
     setSearch,
     setApplyHandicap,
     setRetestedFilter,
+    setSeasonFilter,
   } = useFilters();
+
+  const seasonsInData = availableSeasons ?? new Set<Season>();
+  const hasSeasonData = seasonsInData.size > 0;
+  const seasonChipList = SEASONS.filter((s) => seasonsInData.has(s.id));
 
   const classes: (ClassName | "All")[] = ["All", ...CLASSES];
   const retestedOpts: { k: RetestedFilter; label: string; title: string }[] = [
@@ -97,6 +113,56 @@ export function FilterBar({ total, visible }: { total: number; visible: number }
             );
           })}
         </div>
+        {hasSeasonData && (
+          <div
+            className="flex items-center gap-1"
+            title="Filter by testing season (from the Season column in the sheet)"
+          >
+            <span className="text-[10px] uppercase tracking-wider text-stone-500 mr-1">
+              Season
+            </span>
+            <button
+              onClick={() => setSeasonFilter("all")}
+              className="px-2 py-1 text-[11px] uppercase tracking-wider font-mono rounded-sm border transition-colors"
+              style={{
+                color: seasonFilter === "all" ? "#0a0805" : "#d4af37",
+                backgroundColor:
+                  seasonFilter === "all" ? "#d4af37" : "rgba(0,0,0,0.3)",
+                borderColor: "#d4af37",
+                fontWeight: seasonFilter === "all" ? 700 : 500,
+              }}
+            >
+              All
+            </button>
+            {seasonChipList.map((s) => {
+              const active = seasonFilter === s.id;
+              return (
+                <button
+                  key={s.id}
+                  onClick={() => setSeasonFilter(s.id)}
+                  title={`${s.name} — sheet font: ${s.sheetFontColor}`}
+                  className="px-2 py-1 text-[11px] uppercase tracking-wider font-mono rounded-sm border transition-colors inline-flex items-center gap-1"
+                  style={{
+                    color: active ? "#0a0805" : s.displayColor,
+                    backgroundColor: active
+                      ? s.displayColor
+                      : "rgba(0,0,0,0.3)",
+                    borderColor: s.displayColor,
+                    fontWeight: active ? 700 : 500,
+                  }}
+                >
+                  <span
+                    className="inline-block w-2 h-2 rounded-full"
+                    style={{
+                      backgroundColor: active ? "#0a0805" : s.displayColor,
+                    }}
+                  />
+                  {s.id}
+                </button>
+              );
+            })}
+          </div>
+        )}
         <label className="flex items-center gap-2 text-xs text-stone-400 cursor-pointer select-none ml-auto">
           <input
             type="checkbox"
@@ -114,6 +180,9 @@ export function FilterBar({ total, visible }: { total: number; visible: number }
         <div className="text-xs text-stone-500 font-mono shrink-0">
           {visible}/{total}
         </div>
+      </div>
+      <div className="mt-2 pt-2 border-t border-border/40">
+        <SeasonLegend compact />
       </div>
     </div>
   );

@@ -32,6 +32,8 @@ export interface MapRun {
 
 export type DensityProfile = "consistent" | "neutral" | "density-dependent";
 
+export type Season = "S13" | "S12" | "S11" | "S10";
+
 export interface Build {
   id: string;
   rawName: string;
@@ -39,6 +41,7 @@ export interface Build {
   className: ClassName;
   handicap: number;
   retested: boolean | null;
+  season: Season | null;
   maps: MapRun[];
   avgMpm: number;
   avgNormalizedMpm: number;

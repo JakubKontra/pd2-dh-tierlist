@@ -1,8 +1,12 @@
 import { useEffect, useRef } from "react";
 import { useSearchParams } from "react-router-dom";
-import { useFilters, type RetestedFilter } from "../store/filters";
+import {
+  useFilters,
+  type RetestedFilter,
+  type SeasonFilter,
+} from "../store/filters";
 import { useCompare } from "../store/compare";
-import { CLASSES, type ClassName } from "../data/types";
+import { CLASSES, type ClassName, type Season } from "../data/types";
 
 const CLASS_CODE: Record<ClassName, string> = {
   Amazon: "ama",
@@ -39,6 +43,19 @@ function retestedCode(f: RetestedFilter): string | null {
   return null;
 }
 
+const VALID_SEASONS: readonly Season[] = ["S10", "S11", "S12", "S13"];
+
+function parseSeasonParam(v: string | null): SeasonFilter {
+  if (!v) return "all";
+  const upper = v.trim().toUpperCase();
+  const match = VALID_SEASONS.find((s) => s === upper);
+  return match ?? "all";
+}
+
+function seasonCode(f: SeasonFilter): string | null {
+  return f === "all" ? null : f.toLowerCase();
+}
+
 export function useUrlSync() {
   const [params, setParams] = useSearchParams();
   const hydrated = useRef(false);
@@ -48,10 +65,12 @@ export function useUrlSync() {
     search,
     applyHandicap,
     retestedFilter,
+    seasonFilter,
     setClassFilter,
     setSearch,
     setApplyHandicap,
     setRetestedFilter,
+    setSeasonFilter,
   } = useFilters();
   const pinned = useCompare((s) => s.pinned);
 
@@ -71,6 +90,8 @@ export function useUrlSync() {
     if (h === "1") setApplyHandicap(true);
     const rt = params.get("rt");
     if (rt) setRetestedFilter(parseRetested(rt));
+    const sn = params.get("season");
+    if (sn) setSeasonFilter(parseSeasonParam(sn));
 
     const pins = params.get("pins");
     if (pins) {
@@ -83,7 +104,14 @@ export function useUrlSync() {
         useCompare.setState({ pinned: ids });
       }
     }
-  }, [params, setClassFilter, setSearch, setApplyHandicap, setRetestedFilter]);
+  }, [
+    params,
+    setClassFilter,
+    setSearch,
+    setApplyHandicap,
+    setRetestedFilter,
+    setSeasonFilter,
+  ]);
 
   useEffect(() => {
     if (!hydrated.current) return;
@@ -103,6 +131,10 @@ export function useUrlSync() {
     if (rtCode) next.set("rt", rtCode);
     else next.delete("rt");
 
+    const snCode = seasonCode(seasonFilter);
+    if (snCode) next.set("season", snCode);
+    else next.delete("season");
+
     if (pinned.length) next.set("pins", pinned.join(","));
     else next.delete("pins");
 
@@ -114,6 +146,7 @@ export function useUrlSync() {
     search,
     applyHandicap,
     retestedFilter,
+    seasonFilter,
     pinned,
     params,
     setParams,

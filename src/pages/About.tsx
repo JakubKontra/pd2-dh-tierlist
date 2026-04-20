@@ -1,4 +1,5 @@
 import { SHEET_URL } from "../data/fetchSheet";
+import { SeasonLegend } from "../components/SeasonLegend";
 
 export function About() {
   return (
@@ -52,10 +53,41 @@ export function About() {
           k="(RT'd) β-retest"
           v="Build was retested after the closed-beta patch notes to verify a specific nerf or buff. It is NOT a general freshness flag — the vast majority of tan-font entries in the sheet were tested this season (S13) even without this marker."
         />
-        <Term
-          k="Season tested (font color in sheet)"
-          v="In the source Google Sheet, row font color indicates which season the build was tested in: tan = S13, green = S12, orange = S11, white = S10. The CSV export does not include font color, so this site currently treats every build as S13 by default. If you see an older-looking MPM number, check the sheet directly."
-        />
+      </div>
+
+      <h2 className="heading-gold text-xl mt-6 mb-2">Seasons</h2>
+      <SeasonLegend />
+
+      <div className="panel p-5 mt-3 text-sm text-stone-300 space-y-2 border-d2-gold/30">
+        <h3 className="text-d2-gold font-display text-base">
+          For Dark Humility: enable the season filter
+        </h3>
+        <p>
+          To light up the per-build season filter and badges, add one new
+          column to the sheet titled{" "}
+          <code className="px-1 py-0.5 bg-black/40 rounded-sm text-d2-gold">
+            Season
+          </code>{" "}
+          (any column position works — we detect by header name). For each
+          build row, fill in one of:{" "}
+          <code className="px-1 py-0.5 bg-black/40 rounded-sm">S13</code>,{" "}
+          <code className="px-1 py-0.5 bg-black/40 rounded-sm">S12</code>,{" "}
+          <code className="px-1 py-0.5 bg-black/40 rounded-sm">S11</code>,{" "}
+          <code className="px-1 py-0.5 bg-black/40 rounded-sm">S10</code>.
+        </p>
+        <p className="text-stone-500 text-xs">
+          Parser accepts a few variants: <code>S13</code>, <code>s-13</code>,{" "}
+          <code>Season 13</code>, or just <code>13</code>. No redeploy needed —
+          the site re-reads the live sheet, so the filter and badges appear the
+          next time anyone refreshes the page.
+        </p>
+        <p className="text-stone-500 text-xs mt-2">
+          <em>Alternative paths if you'd rather not touch the sheet:</em> we
+          could (a) use the Google Sheets API with a key to read font colors
+          directly, or (b) have you "Publish to web" the sheet so we can scrape
+          cell styles from the published HTML. Both work but add ongoing
+          complexity — the column is simpler.
+        </p>
       </div>
 
       <h2 className="heading-gold text-xl mt-6 mb-2">Credit</h2>

@@ -67,4 +67,27 @@ describe("parseTierlist", () => {
     expect(nova?.avgNormalizedMpm).toBeCloseTo(604.9, 1);
     expect(nova?.avgMpm).toBeCloseTo(682, 1);
   });
+
+  it("leaves season as null when no Season column exists", () => {
+    expect(tl.builds.every((b) => b.season === null)).toBe(true);
+  });
+});
+
+const CSV_WITH_SEASON = `S10-13 Tested Build,T3 Map 1,MPM 1,Density 1,(MPM*200)/(D+100) 1,T3 Map 2,MPM 2,Density 2,(MPM*200)/(D+100) 2,T3 Map 3,MPM 3,Density 3,(MPM*200)/(D+100) 3,Top 3 Map Avg. MPM,Top 3 T3 Map Avg. Std. MPM,Top 3 Map Avg. MPM Mean,Tier-Cutoffs,Tiers,Class Mapping Score (7->1),Class Starter Score (7->1),Class Bossing Score (7->1),Class Total Score,Season
+Nova (H Lvl 1),Blood Moon,719,125,639.11,Phlegethon,677,136,573.73,Canyon of Sescheron,650,116,601.85,682.00,604.90,531,673.58,S+,Sorceress,Sorceress,Sorceress,Sorceress,S13
+Blizzard ,Blood Moon (f),741,133,636.05,Phlegethon (f),578,117,532.72,Canyon of Sescheron (f),655,131,567.10,658.00,578.62,217,478.62,B-,Amazon,Amazon,Amazon,Amazon,Season 12
+Glacial Spike,Blood Moon,412,121,372.85,Phlegethon,327,137,275.95,Canyon of Sescheron,317,135,269.79,352.00,306.20,Mean - Min (Bottom Half),450.29,C+,5,2,7,14,s-11
+Vengeance ,Blood Moon (f),806,149,647.39,Canyon of Sescheron ,577,118,529.36,Phlegethon,566,115,526.51,649.67,567.75,,,,,,,,10
+,,,,,,,,,,,,,,,,,,,,,,
+Key,,,,,,,,,,,,,,,,,,,,,,`;
+
+describe("parseTierlist with Season column", () => {
+  const tl = parseTierlist(CSV_WITH_SEASON);
+
+  it("parses all supported season formats", () => {
+    expect(tl.builds.find((b) => b.displayName === "Nova")?.season).toBe("S13");
+    expect(tl.builds.find((b) => b.displayName === "Blizzard")?.season).toBe("S12");
+    expect(tl.builds.find((b) => b.displayName === "Glacial Spike")?.season).toBe("S11");
+    expect(tl.builds.find((b) => b.displayName === "Vengeance")?.season).toBe("S10");
+  });
 });

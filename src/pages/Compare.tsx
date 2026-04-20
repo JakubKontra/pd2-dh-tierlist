@@ -5,6 +5,7 @@ import { ErrorState, LoadingState } from "../components/LoadState";
 import { MAX_PINS, useCompare } from "../store/compare";
 import { ClassBadge, classColor } from "../components/ClassBadge";
 import { DensityBadge } from "../components/DensityBadge";
+import { SeasonPill } from "../components/SeasonPill";
 import { ShareButton } from "../components/ShareButton";
 import { ExportPngButton } from "../components/ExportPngButton";
 import { tierColorVar } from "../data/tiering";
@@ -141,6 +142,17 @@ export function Compare() {
                   {b.handicap > 0 ? "+" : ""}
                   {Math.round(b.handicap * 3)}/3 tier
                 </span>
+              )}
+            </RowCell>
+          ))}
+
+          <RowLabel>Season tested</RowLabel>
+          {builds.map((b) => (
+            <RowCell key={b.id}>
+              {b.season ? (
+                <SeasonPill season={b.season} size="sm" />
+              ) : (
+                <span className="text-stone-600 text-xs">unknown</span>
               )}
             </RowCell>
           ))}
