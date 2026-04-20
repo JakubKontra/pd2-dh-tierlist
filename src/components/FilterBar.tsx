@@ -1,6 +1,7 @@
 import { CLASSES, type ClassName } from "../data/types";
 import { useFilters, type RetestedFilter } from "../store/filters";
 import { classColor } from "./ClassBadge";
+import { ClassIcon } from "./ClassIcon";
 
 export function FilterBar({ total, visible }: { total: number; visible: number }) {
   const {
@@ -40,7 +41,7 @@ export function FilterBar({ total, visible }: { total: number; visible: number }
               <button
                 key={c}
                 onClick={() => setClassFilter(c)}
-                className="px-3 py-1 text-xs uppercase tracking-wider font-mono rounded-sm border transition-all"
+                className="px-2.5 py-1 text-xs uppercase tracking-wider font-mono rounded-sm border transition-all inline-flex items-center gap-1.5"
                 style={{
                   color: active ? "#0a0805" : color,
                   borderColor: color,
@@ -48,6 +49,13 @@ export function FilterBar({ total, visible }: { total: number; visible: number }
                   fontWeight: active ? 700 : 500,
                 }}
               >
+                {c !== "All" && (
+                  <ClassIcon
+                    cls={c as ClassName}
+                    size={13}
+                    color={active ? "#0a0805" : undefined}
+                  />
+                )}
                 {c}
               </button>
             );

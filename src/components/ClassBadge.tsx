@@ -1,4 +1,5 @@
 import type { ClassName } from "../data/types";
+import { ClassIcon } from "./ClassIcon";
 
 const CLASS_COLOR: Record<ClassName, string> = {
   Amazon: "var(--color-class-amazon)",
@@ -11,34 +12,31 @@ const CLASS_COLOR: Record<ClassName, string> = {
   Unknown: "#5a4530",
 };
 
-const CLASS_ABBR: Record<ClassName, string> = {
-  Amazon: "AMA",
-  Assassin: "ASN",
-  Barbarian: "BAR",
-  Druid: "DRU",
-  Necromancer: "NEC",
-  Paladin: "PAL",
-  Sorceress: "SOR",
-  Unknown: "???",
-};
-
 export function classColor(cls: ClassName): string {
   return CLASS_COLOR[cls];
 }
 
 export function ClassBadge({ cls, size = "sm" }: { cls: ClassName; size?: "sm" | "md" }) {
-  const px = size === "md" ? "px-2 py-0.5 text-xs" : "px-1.5 py-0.5 text-[10px]";
+  const isMd = size === "md";
+  const iconSize = isMd ? 18 : 13;
+  const box = isMd ? "px-1.5 py-0.5" : "px-1 py-0.5";
   return (
     <span
-      className={`${px} font-mono uppercase tracking-wider rounded-sm border`}
+      className={`${box} rounded-sm border inline-flex items-center gap-1 leading-none`}
       style={{
         color: CLASS_COLOR[cls],
         borderColor: CLASS_COLOR[cls],
         backgroundColor: "rgba(0, 0, 0, 0.4)",
       }}
       title={cls}
+      aria-label={cls}
     >
-      {CLASS_ABBR[cls]}
+      <ClassIcon cls={cls} size={iconSize} />
+      {isMd && (
+        <span className="font-mono uppercase tracking-wider text-[11px]">
+          {cls}
+        </span>
+      )}
     </span>
   );
 }

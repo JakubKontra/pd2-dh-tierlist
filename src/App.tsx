@@ -4,6 +4,7 @@ import { Tierlist } from "./pages/Tierlist";
 import { BuildDetail } from "./pages/BuildDetail";
 import { About } from "./pages/About";
 import { Compare } from "./pages/Compare";
+import { Roles } from "./pages/Roles";
 import { LoadingState } from "./components/LoadState";
 import { CompareFab } from "./components/CompareFab";
 import { useUrlSync } from "./hooks/useUrlSync";
@@ -40,6 +41,9 @@ function NavBar() {
         <nav className="flex items-center ml-auto">
           <NavLink to="/" end className={linkCls}>
             Tierlist
+          </NavLink>
+          <NavLink to="/roles" className={linkCls}>
+            Roles
           </NavLink>
           <NavLink to="/stats" className={linkCls}>
             Stats
@@ -126,6 +130,7 @@ function Shell() {
         <Suspense fallback={<LoadingState message="Loading charts…" />}>
           <Routes>
             <Route path="/" element={<Tierlist />} />
+            <Route path="/roles" element={<Roles />} />
             <Route path="/stats" element={<Stats />} />
             <Route path="/compare" element={<Compare />} />
             <Route path="/build/:id" element={<BuildDetail />} />
