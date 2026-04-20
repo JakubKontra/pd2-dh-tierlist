@@ -1,0 +1,104 @@
+@import "tailwindcss";
+
+@theme {
+  --color-bg: #0a0805;
+  --color-panel: #140f0a;
+  --color-panel-hi: #1f1712;
+  --color-border: #3a2e20;
+  --color-border-hi: #5a4530;
+
+  --color-d2-unique: #a59263;
+  --color-d2-set: #00ff00;
+  --color-d2-rare: #ffff00;
+  --color-d2-magic: #6969ff;
+  --color-d2-normal: #ffffff;
+  --color-d2-cracked: #696969;
+  --color-d2-gold: #d4af37;
+  --color-d2-red: #cc0000;
+
+  --color-tier-splus: #ff4500;
+  --color-tier-s: #ff7f00;
+  --color-tier-sminus: #ffa500;
+  --color-tier-aplus: #ffd700;
+  --color-tier-a: #ffff33;
+  --color-tier-aminus: #e6e600;
+  --color-tier-bplus: #9acd32;
+  --color-tier-b: #7bb661;
+  --color-tier-bminus: #5f9ea0;
+  --color-tier-cplus: #6495ed;
+  --color-tier-c: #4169e1;
+  --color-tier-cminus: #6a5acd;
+  --color-tier-dplus: #8b8378;
+  --color-tier-d: #696969;
+  --color-tier-dminus: #555555;
+  --color-tier-fplus: #4a2020;
+  --color-tier-f: #3a1515;
+  --color-tier-fminus: #2a0a0a;
+
+  --color-class-amazon: #e8b661;
+  --color-class-assassin: #b06fbd;
+  --color-class-barbarian: #c4c4c4;
+  --color-class-druid: #7cb342;
+  --color-class-necromancer: #8a8a8a;
+  --color-class-paladin: #ffe082;
+  --color-class-sorceress: #64b5f6;
+
+  --font-display: "Cinzel", "Trajan Pro", "Times New Roman", serif;
+  --font-body: "Noto Sans", system-ui, -apple-system, sans-serif;
+}
+
+html, body {
+  background-color: var(--color-bg);
+  color: #d8c8a8;
+  font-family: var(--font-body);
+  margin: 0;
+  padding: 0;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  background-image:
+    radial-gradient(ellipse at top, rgba(139, 69, 19, 0.08), transparent 60%),
+    radial-gradient(ellipse at bottom, rgba(204, 0, 0, 0.04), transparent 60%);
+  min-height: 100vh;
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  letter-spacing: 0.05em;
+  font-weight: 600;
+  color: #e6d6b6;
+}
+
+.panel {
+  background-color: var(--color-panel);
+  border: 1px solid var(--color-border);
+  border-radius: 2px;
+  box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.6), 0 2px 6px rgba(0, 0, 0, 0.4);
+}
+.panel-hi {
+  background-color: var(--color-panel-hi);
+  border: 1px solid var(--color-border-hi);
+}
+.heading-gold {
+  background: linear-gradient(180deg, #f1d37a 0%, #a37a2a 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  text-shadow: 0 0 6px rgba(212, 175, 55, 0.15);
+}
+
+.scrollbar-thin::-webkit-scrollbar {
+  height: 8px;
+  width: 8px;
+}
+.scrollbar-thin::-webkit-scrollbar-track {
+  background: var(--color-panel);
+}
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background: var(--color-border-hi);
+  border-radius: 2px;
+}
