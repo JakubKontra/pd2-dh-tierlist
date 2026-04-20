@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import type { Build } from "../data/types";
 import { ClassBadge, classColor } from "./ClassBadge";
+import { DensityBadge } from "./DensityBadge";
 import { PinButton } from "./PinButton";
 
 function handicapLabel(h: number): string | null {
@@ -47,6 +48,11 @@ export function BuildCard({ build }: { build: Build }) {
               RT
             </span>
           )}
+          <DensityBadge
+            profile={build.densityProfile}
+            stdDev={build.normStdDev}
+            variant="dot"
+          />
         </div>
       </div>
       <div className="text-right shrink-0">

@@ -4,6 +4,7 @@ import { applyHandicap } from "./tiering";
 import {
   TIERS,
   type Build,
+  type DensityProfile,
   type MapRun,
   type Tier,
   type TierCutoffs,
@@ -148,6 +149,20 @@ function buildCutoffsForDerivation(
   return { cutoffs, tierLowerBounds: entries };
 }
 
+function stdDev(xs: number[]): number {
+  if (xs.length < 2) return 0;
+  const mean = xs.reduce((a, b) => a + b, 0) / xs.length;
+  return Math.sqrt(xs.reduce((a, b) => a + (b - mean) ** 2, 0) / xs.length);
+}
+
+function classifyDensity(sd: number, avg: number): DensityProfile {
+  if (avg <= 0) return "neutral";
+  const cv = sd / avg;
+  if (cv < 0.05) return "consistent";
+  if (cv > 0.11) return "density-dependent";
+  return "neutral";
+}
+
 function tierFromCutoffs(
   value: number,
   lowerBounds: [Tier, number][]
@@ -230,6 +245,10 @@ export function parseTierlist(csv: string): Tierlist {
     const tierRaw = tierFromCutoffs(avgNormalizedMpm, tierLowerBounds);
     const tierAdjusted = applyHandicap(tierRaw, handicap);
 
+    const norms = maps.map((m) => m.normalizedMpm);
+    const normStdDev = stdDev(norms);
+    const densityProfile = classifyDensity(normStdDev, avgNormalizedMpm);
+
     let baseId = slugify(displayName);
     let id = baseId;
     let n = 2;
@@ -250,6 +269,8 @@ export function parseTierlist(csv: string): Tierlist {
       avgNormalizedMpm,
       tierRaw,
       tierAdjusted,
+      normStdDev,
+      densityProfile,
     });
   }
 

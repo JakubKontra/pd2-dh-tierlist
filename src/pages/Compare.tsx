@@ -1,8 +1,12 @@
+import { useRef } from "react";
 import { Link } from "react-router-dom";
 import { useTierlist } from "../data/fetchSheet";
 import { ErrorState, LoadingState } from "../components/LoadState";
 import { MAX_PINS, useCompare } from "../store/compare";
 import { ClassBadge, classColor } from "../components/ClassBadge";
+import { DensityBadge } from "../components/DensityBadge";
+import { ShareButton } from "../components/ShareButton";
+import { ExportPngButton } from "../components/ExportPngButton";
 import { tierColorVar } from "../data/tiering";
 import { roleScoreFor } from "../data/classScores";
 import type { Build, MapRun } from "../data/types";
@@ -12,6 +16,7 @@ export function Compare() {
   const pinned = useCompare((s) => s.pinned);
   const togglePin = useCompare((s) => s.togglePin);
   const clear = useCompare((s) => s.clear);
+  const exportRef = useRef<HTMLDivElement>(null);
 
   if (loading && !data) return <LoadingState />;
   if (error && !data) return <ErrorState error={error} onRetry={refetch} />;
@@ -52,15 +57,22 @@ export function Compare() {
             {builds.length} / {MAX_PINS} builds pinned
           </p>
         </div>
-        <button
-          onClick={clear}
-          className="px-3 py-1 text-xs uppercase tracking-wider font-mono rounded-sm border border-d2-red text-d2-red hover:bg-d2-red hover:text-black transition-colors"
-        >
-          Clear all
-        </button>
+        <div className="flex items-center gap-2" data-export-ignore>
+          <ShareButton title="Copy link to share this comparison" />
+          <ExportPngButton
+            targetRef={exportRef}
+            filename={`pd2-compare-${builds.map((b) => b.id).join("-vs-")}.png`}
+          />
+          <button
+            onClick={clear}
+            className="px-3 py-1 text-xs uppercase tracking-wider font-mono rounded-sm border border-d2-red text-d2-red hover:bg-d2-red hover:text-black transition-colors"
+          >
+            Clear all
+          </button>
+        </div>
       </div>
 
-      <div className="overflow-x-auto scrollbar-thin">
+      <div className="overflow-x-auto scrollbar-thin" ref={exportRef}>
         <div
           className="grid gap-2 min-w-[720px]"
           style={{ gridTemplateColumns: gridCols }}
@@ -160,8 +172,22 @@ export function Compare() {
           {builds.map((b) => (
             <RowCell key={b.id}>
               <span className="font-mono text-sm text-stone-300">
-                {stdDev(b.maps.map((m) => m.normalizedMpm)).toFixed(1)}
+                {b.normStdDev.toFixed(1)}
               </span>
+            </RowCell>
+          ))}
+
+          <RowLabel>Density profile</RowLabel>
+          {builds.map((b) => (
+            <RowCell key={b.id}>
+              {b.densityProfile === "neutral" ? (
+                <span className="text-stone-500 text-xs">normal</span>
+              ) : (
+                <DensityBadge
+                  profile={b.densityProfile}
+                  stdDev={b.normStdDev}
+                />
+              )}
             </RowCell>
           ))}
 
@@ -348,8 +374,3 @@ function findMap(b: Build, name: string): MapRun | null {
   return b.maps.find((m) => m.name === name) ?? null;
 }
 
-function stdDev(xs: number[]): number {
-  if (xs.length < 2) return 0;
-  const mean = xs.reduce((a, b) => a + b, 0) / xs.length;
-  return Math.sqrt(xs.reduce((a, b) => a + (b - mean) ** 2, 0) / xs.length);
-}

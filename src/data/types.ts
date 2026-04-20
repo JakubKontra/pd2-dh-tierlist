@@ -30,6 +30,8 @@ export interface MapRun {
   normalizedMpm: number;
 }
 
+export type DensityProfile = "consistent" | "neutral" | "density-dependent";
+
 export interface Build {
   id: string;
   rawName: string;
@@ -42,6 +44,8 @@ export interface Build {
   avgNormalizedMpm: number;
   tierRaw: Tier;
   tierAdjusted: Tier;
+  normStdDev: number;
+  densityProfile: DensityProfile;
 }
 
 export interface TierCutoffs {

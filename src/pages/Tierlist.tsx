@@ -1,14 +1,17 @@
-import { useMemo } from "react";
+import { useMemo, useRef } from "react";
 import { useTierlist } from "../data/fetchSheet";
 import { useFilters } from "../store/filters";
 import { TIERS, type Build, type Tier } from "../data/types";
 import { TierRow } from "../components/TierRow";
 import { FilterBar } from "../components/FilterBar";
 import { ErrorState, LoadingState } from "../components/LoadState";
+import { ShareButton } from "../components/ShareButton";
+import { ExportPngButton } from "../components/ExportPngButton";
 
 export function Tierlist() {
   const { data, loading, error, refetch } = useTierlist();
   const { classFilter, search, applyHandicap, retestedFilter } = useFilters();
+  const exportRef = useRef<HTMLDivElement>(null);
 
   const filtered = useMemo<Build[]>(() => {
     if (!data) return [];
@@ -41,21 +44,30 @@ export function Tierlist() {
 
   return (
     <div>
-      <div className="mb-4">
-        <h1 className="heading-gold text-3xl sm:text-4xl mb-1">
-          Season 13 — Betrayal
-        </h1>
-        <p className="text-stone-400 text-sm">
-          Build tier list by{" "}
-          <span className="text-d2-gold">Dark Humility</span> •{" "}
-          {data.builds.length} builds tested • updated live from Google Sheets
-        </p>
+      <div className="mb-4 flex flex-wrap items-start gap-3">
+        <div className="flex-1 min-w-[240px]">
+          <h1 className="heading-gold text-3xl sm:text-4xl mb-1">
+            Season 13 — Betrayal
+          </h1>
+          <p className="text-stone-400 text-sm">
+            Build tier list by{" "}
+            <span className="text-d2-gold">Dark Humility</span> •{" "}
+            {data.builds.length} builds tested • updated live from Google Sheets
+          </p>
+        </div>
+        <div className="flex items-center gap-2" data-export-ignore>
+          <ShareButton title="Copy link (preserves your class, search & handicap filters)" />
+          <ExportPngButton targetRef={exportRef} filename="pd2-s13-tierlist.png" />
+        </div>
       </div>
       <FilterBar total={data.builds.length} visible={filtered.length} />
-      <div className="space-y-2">
+      <div ref={exportRef} className="space-y-2">
         {TIERS.map((tier) => (
           <TierRow key={tier} tier={tier} builds={byTier.get(tier) ?? []} />
         ))}
+        <div className="pt-3 mt-3 border-t border-border/50 text-[10px] text-stone-500 text-center font-mono">
+          pd2-tierlist · data by Dark Humility · pulled {new Date(data.fetchedAt).toLocaleDateString()}
+        </div>
       </div>
     </div>
   );

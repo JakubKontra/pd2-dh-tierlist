@@ -6,6 +6,7 @@ import { About } from "./pages/About";
 import { Compare } from "./pages/Compare";
 import { LoadingState } from "./components/LoadState";
 import { CompareFab } from "./components/CompareFab";
+import { useUrlSync } from "./hooks/useUrlSync";
 
 const Stats = lazy(() => import("./pages/Stats").then((m) => ({ default: m.Stats })));
 
@@ -75,29 +76,57 @@ function Footer() {
         </a>
         . Not affiliated with Blizzard or PD2 team.
       </p>
+      <p className="mt-1">
+        Site built by{" "}
+        <a
+          href="https://jakubkontra.com"
+          target="_blank"
+          rel="noreferrer"
+          className="text-d2-unique hover:underline"
+        >
+          Jakub Kontra
+        </a>{" "}
+        (PD2:{" "}
+        <a
+          href="https://www.twitch.tv/thejimmycz"
+          target="_blank"
+          rel="noreferrer"
+          className="text-d2-gold hover:underline"
+        >
+          thejimmycz
+        </a>
+        ).
+      </p>
     </footer>
+  );
+}
+
+function Shell() {
+  useUrlSync();
+  return (
+    <div className="min-h-screen flex flex-col">
+      <NavBar />
+      <main className="flex-1 max-w-[1400px] w-full mx-auto px-4 py-6">
+        <Suspense fallback={<LoadingState message="Loading charts…" />}>
+          <Routes>
+            <Route path="/" element={<Tierlist />} />
+            <Route path="/stats" element={<Stats />} />
+            <Route path="/compare" element={<Compare />} />
+            <Route path="/build/:id" element={<BuildDetail />} />
+            <Route path="/about" element={<About />} />
+          </Routes>
+        </Suspense>
+      </main>
+      <CompareFab />
+      <Footer />
+    </div>
   );
 }
 
 export default function App() {
   return (
     <BrowserRouter>
-      <div className="min-h-screen flex flex-col">
-        <NavBar />
-        <main className="flex-1 max-w-[1400px] w-full mx-auto px-4 py-6">
-          <Suspense fallback={<LoadingState message="Loading charts…" />}>
-            <Routes>
-              <Route path="/" element={<Tierlist />} />
-              <Route path="/stats" element={<Stats />} />
-              <Route path="/compare" element={<Compare />} />
-              <Route path="/build/:id" element={<BuildDetail />} />
-              <Route path="/about" element={<About />} />
-            </Routes>
-          </Suspense>
-        </main>
-        <CompareFab />
-        <Footer />
-      </div>
+      <Shell />
     </BrowserRouter>
   );
 }

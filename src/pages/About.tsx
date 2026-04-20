@@ -67,6 +67,27 @@ export function About() {
           corrected.
         </p>
         <p>
+          Site built by{" "}
+          <a
+            href="https://jakubkontra.com"
+            target="_blank"
+            rel="noreferrer"
+            className="text-d2-gold hover:underline"
+          >
+            Jakub Kontra
+          </a>
+          , PD2 player known as{" "}
+          <a
+            href="https://www.twitch.tv/thejimmycz"
+            target="_blank"
+            rel="noreferrer"
+            className="text-d2-gold font-bold hover:underline"
+          >
+            thejimmycz
+          </a>{" "}
+          on Twitch.
+        </p>
+        <p>
           <a
             href="https://projectdiablo2.com"
             target="_blank"

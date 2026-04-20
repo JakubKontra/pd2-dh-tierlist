@@ -2,6 +2,7 @@ import { Link, useParams } from "react-router-dom";
 import { useTierlist, SHEET_URL } from "../data/fetchSheet";
 import { ErrorState, LoadingState } from "../components/LoadState";
 import { ClassBadge } from "../components/ClassBadge";
+import { DensityBadge } from "../components/DensityBadge";
 import { PinButton } from "../components/PinButton";
 import { tierColorVar } from "../data/tiering";
 
@@ -80,6 +81,8 @@ export function BuildDetail() {
                 Retested (closed beta)
               </span>
             )}
+            <DensityBadge profile={build.densityProfile} stdDev={build.normStdDev} />
+
             <span className="text-stone-500">
               Raw tier: <span className="text-stone-300">{build.tierRaw}</span>
             </span>
