@@ -1,10 +1,6 @@
 import { useEffect, useRef } from "react";
 import { useSearchParams } from "react-router-dom";
-import {
-  useFilters,
-  type RetestedFilter,
-  type SeasonFilter,
-} from "../store/filters";
+import { useFilters, type SeasonFilter } from "../store/filters";
 import { useCompare } from "../store/compare";
 import { CLASSES, type ClassName, type Season } from "../data/types";
 
@@ -31,18 +27,6 @@ function classToCode(c: ClassName | "All"): string {
   return c === "All" ? "all" : CLASS_CODE[c];
 }
 
-function parseRetested(v: string | null): RetestedFilter {
-  if (v === "1" || v === "rt") return "retested";
-  if (v === "0" || v === "notrt") return "not-retested";
-  return "all";
-}
-
-function retestedCode(f: RetestedFilter): string | null {
-  if (f === "retested") return "1";
-  if (f === "not-retested") return "0";
-  return null;
-}
-
 const VALID_SEASONS: readonly Season[] = ["S10", "S11", "S12", "S13"];
 
 function parseSeasonParam(v: string | null): SeasonFilter {
@@ -64,12 +48,10 @@ export function useUrlSync() {
     classFilter,
     search,
     applyHandicap,
-    retestedFilter,
     seasonFilter,
     setClassFilter,
     setSearch,
     setApplyHandicap,
-    setRetestedFilter,
     setSeasonFilter,
   } = useFilters();
   const pinned = useCompare((s) => s.pinned);
@@ -88,8 +70,6 @@ export function useUrlSync() {
     const h = params.get("h");
     if (h === "0") setApplyHandicap(false);
     if (h === "1") setApplyHandicap(true);
-    const rt = params.get("rt");
-    if (rt) setRetestedFilter(parseRetested(rt));
     const sn = params.get("season");
     if (sn) setSeasonFilter(parseSeasonParam(sn));
 
@@ -109,7 +89,6 @@ export function useUrlSync() {
     setClassFilter,
     setSearch,
     setApplyHandicap,
-    setRetestedFilter,
     setSeasonFilter,
   ]);
 
@@ -127,9 +106,7 @@ export function useUrlSync() {
     if (!applyHandicap) next.set("h", "0");
     else next.delete("h");
 
-    const rtCode = retestedCode(retestedFilter);
-    if (rtCode) next.set("rt", rtCode);
-    else next.delete("rt");
+    next.delete("rt");
 
     const snCode = seasonCode(seasonFilter);
     if (snCode) next.set("season", snCode);
@@ -145,7 +122,6 @@ export function useUrlSync() {
     classFilter,
     search,
     applyHandicap,
-    retestedFilter,
     seasonFilter,
     pinned,
     params,

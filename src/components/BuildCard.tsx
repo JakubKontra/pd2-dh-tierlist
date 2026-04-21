@@ -4,6 +4,7 @@ import { ClassBadge, classColor } from "./ClassBadge";
 import { DensityBadge } from "./DensityBadge";
 import { PinButton } from "./PinButton";
 import { SeasonPill } from "./SeasonPill";
+import { seasonById } from "../data/seasons";
 
 function handicapLabel(h: number): string | null {
   if (!h) return null;
@@ -15,6 +16,9 @@ function handicapLabel(h: number): string | null {
 
 export function BuildCard({ build }: { build: Build }) {
   const handicap = handicapLabel(build.handicap);
+  const nameColor = build.season
+    ? seasonById(build.season)?.displayColor
+    : undefined;
   return (
     <Link
       to={`/build/${build.id}`}
@@ -22,7 +26,15 @@ export function BuildCard({ build }: { build: Build }) {
       style={{ borderLeftWidth: 3, borderLeftColor: classColor(build.className) }}
     >
       <div className="flex-1 min-w-0">
-        <div className="text-sm font-medium text-stone-100 truncate leading-tight group-hover:text-d2-unique">
+        <div
+          className="text-sm font-medium truncate leading-tight"
+          style={{ color: nameColor ?? "#f5f5f4" }}
+          title={
+            build.season
+              ? `Tested in ${build.season}`
+              : "Season not recorded"
+          }
+        >
           {build.displayName}
         </div>
         <div className="flex items-center gap-1.5 mt-0.5">
@@ -38,15 +50,6 @@ export function BuildCard({ build }: { build: Build }) {
               title={`Tier handicap: ${handicap} tier(s)`}
             >
               H{handicap}
-            </span>
-          )}
-          {build.retested === true && (
-            <span
-              className="text-[10px] font-mono px-1 rounded-sm"
-              style={{ color: "#7cb342", border: "1px solid #7cb342" }}
-              title="β-retest: retested after closed-beta patch notes to verify specific nerf/buff changes"
-            >
-              β
             </span>
           )}
           <DensityBadge

@@ -14,7 +14,7 @@ export const SEASONS: SeasonMeta[] = [
     name: "Season 13 — Betrayal",
     sheetFontColor: "tan",
     displayColor: "#d4af37",
-    note: "Current season. Most builds in the sheet. Subset also tagged (RT'd) = post-closed-beta retest.",
+    note: "Current season. Most builds in the sheet — reflects post-beta balance.",
   },
   {
     id: "S12",

@@ -54,8 +54,8 @@ export function About() {
           v="The build was tested on a Fortified-affix map (optimal for many builds). Does not affect scoring, just context."
         />
         <Term
-          k="(RT'd) β-retest"
-          v="Build was retested after the closed-beta patch notes to verify a specific nerf or buff. It is NOT a general freshness flag — the vast majority of tan-font entries in the sheet were tested this season (S13) even without this marker."
+          k="Build name color"
+          v="Build names on the tier list are colored by the season in which the build was tested (tan = S13, green = S12, orange = S11, gray = S10), mirroring the sheet's font-color convention. Only S13 entries reflect current-patch balance."
         />
       </div>
 

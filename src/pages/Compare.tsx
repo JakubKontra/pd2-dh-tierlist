@@ -10,7 +10,6 @@ import { ShareButton } from "../components/ShareButton";
 import { ExportPngButton } from "../components/ExportPngButton";
 import { PageHero } from "../components/PageHero";
 import { tierColorVar } from "../data/tiering";
-import { roleScoreFor } from "../data/classScores";
 import type { Build, MapRun } from "../data/types";
 
 export function Compare() {
@@ -110,11 +109,6 @@ export function Compare() {
                   </Link>
                   <div className="flex items-center gap-1.5 mt-1">
                     <ClassBadge cls={b.className} />
-                    {b.retested === true && (
-                      <span className="text-[10px] font-mono px-1 rounded-sm border border-lime-700 text-lime-400">
-                        RT
-                      </span>
-                    )}
                   </div>
                 </div>
               </div>
@@ -215,13 +209,6 @@ export function Compare() {
               mapName={mapName}
               runs={builds.map((b) => findMap(b, mapName))}
             />
-          ))}
-
-          <SectionHeader>Class role scoring</SectionHeader>
-          {padRow(builds.length)}
-
-          {(["mapping", "starter", "bossing", "total"] as const).map((role) => (
-            <RoleRow key={role} role={role} builds={builds} />
           ))}
         </div>
       </div>
@@ -327,48 +314,6 @@ function MapRow({
       ))}
     </>
   );
-}
-
-function RoleRow({
-  role,
-  builds,
-}: {
-  role: "mapping" | "starter" | "bossing" | "total";
-  builds: Build[];
-}) {
-  const scores = builds.map((b) => {
-    const s = roleScoreFor(b.className);
-    return s ? s[role] : null;
-  });
-  const valid = scores.filter((s): s is number => s !== null);
-  const best = valid.length > 1 ? Math.min(...valid) : null;
-
-  return (
-    <>
-      <RowLabel>{labelFor(role)}</RowLabel>
-      {scores.map((s, i) => (
-        <RowCell key={i}>
-          {s === null ? (
-            <span className="text-stone-600 text-xs">—</span>
-          ) : (
-            <span
-              className={`font-mono text-sm ${s === best ? "text-d2-gold font-bold" : "text-stone-300"}`}
-              title={`${s} of 7 (lower = better)`}
-            >
-              #{s} / 7
-              {s === best && (
-                <span className="ml-1 text-[10px] uppercase">best</span>
-              )}
-            </span>
-          )}
-        </RowCell>
-      ))}
-    </>
-  );
-}
-
-function labelFor(role: "mapping" | "starter" | "bossing" | "total"): string {
-  return role[0].toUpperCase() + role.slice(1);
 }
 
 function collectMapNames(builds: Build[]): string[] {

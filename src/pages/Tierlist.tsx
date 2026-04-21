@@ -11,8 +11,7 @@ import { PageHero } from "../components/PageHero";
 
 export function Tierlist() {
   const { data, loading, error, refetch } = useTierlist();
-  const { classFilter, search, applyHandicap, retestedFilter, seasonFilter } =
-    useFilters();
+  const { classFilter, search, applyHandicap, seasonFilter } = useFilters();
   const exportRef = useRef<HTMLDivElement>(null);
 
   const availableSeasons = useMemo<Set<Season>>(() => {
@@ -28,12 +27,10 @@ export function Tierlist() {
     return data.builds.filter((b) => {
       if (classFilter !== "All" && b.className !== classFilter) return false;
       if (q && !b.displayName.toLowerCase().includes(q)) return false;
-      if (retestedFilter === "retested" && b.retested !== true) return false;
-      if (retestedFilter === "not-retested" && b.retested === true) return false;
       if (seasonFilter !== "all" && b.season !== seasonFilter) return false;
       return true;
     });
-  }, [data, classFilter, search, retestedFilter, seasonFilter]);
+  }, [data, classFilter, search, seasonFilter]);
 
   const byTier = useMemo(() => {
     const map = new Map<Tier, Build[]>();
@@ -58,7 +55,7 @@ export function Tierlist() {
         title="Dark Humility"
         subtitle={
           <>
-            Season 13 Betrayal — PD2 Late-Game Mapping Performance{" "}
+            Late-Game Mapping Tier List — Season 13 Betrayal{" "}
             <span className="text-stone-500 italic not-tracking-wide">
               (Tentative)
             </span>

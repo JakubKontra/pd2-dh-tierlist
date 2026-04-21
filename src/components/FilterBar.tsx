@@ -1,5 +1,5 @@
 import { CLASSES, type ClassName, type Season } from "../data/types";
-import { useFilters, type RetestedFilter } from "../store/filters";
+import { useFilters } from "../store/filters";
 import { classColor } from "./ClassBadge";
 import { ClassIcon } from "./ClassIcon";
 import { SeasonLegend } from "./SeasonLegend";
@@ -18,12 +18,10 @@ export function FilterBar({
     classFilter,
     search,
     applyHandicap,
-    retestedFilter,
     seasonFilter,
     setClassFilter,
     setSearch,
     setApplyHandicap,
-    setRetestedFilter,
     setSeasonFilter,
   } = useFilters();
 
@@ -32,21 +30,6 @@ export function FilterBar({
   const seasonChipList = SEASONS.filter((s) => seasonsInData.has(s.id));
 
   const classes: (ClassName | "All")[] = ["All", ...CLASSES];
-  const retestedOpts: { k: RetestedFilter; label: string; title: string }[] = [
-    { k: "all", label: "All", title: "Show every build" },
-    {
-      k: "retested",
-      label: "β-retest",
-      title:
-        "Flagged (RT'd) in the sheet: retested after closed-beta patch notes to verify specific nerf/buff changes.",
-    },
-    {
-      k: "not-retested",
-      label: "No β-retest",
-      title:
-        "Not tagged (RT'd). These are still S13 tests for tan-font builds; older-season carryovers (other font colors) are not distinguishable via the CSV export.",
-    },
-  ];
 
   return (
     <div className="panel p-3 mb-5 sticky top-[62px] z-30 backdrop-blur-sm bg-panel/95">
@@ -86,33 +69,6 @@ export function FilterBar({
           onChange={(e) => setSearch(e.target.value)}
           className="panel-hi px-3 py-1 text-sm rounded-sm outline-none focus:border-d2-gold placeholder:text-stone-600 text-stone-100 min-w-[180px] flex-1 sm:flex-none sm:w-[240px]"
         />
-        <div
-          className="flex items-center gap-1"
-          title="Closed-beta retest status — whether the build was retested after closed-beta patch notes"
-        >
-          <span className="text-[10px] uppercase tracking-wider text-stone-500 mr-1">
-            β-retest
-          </span>
-          {retestedOpts.map((o) => {
-            const active = retestedFilter === o.k;
-            return (
-              <button
-                key={o.k}
-                onClick={() => setRetestedFilter(o.k)}
-                title={o.title}
-                className="px-2 py-1 text-[11px] uppercase tracking-wider font-mono rounded-sm border transition-colors"
-                style={{
-                  color: active ? "#0a0805" : "#9acd32",
-                  backgroundColor: active ? "#9acd32" : "rgba(0,0,0,0.3)",
-                  borderColor: "#7bb661",
-                  fontWeight: active ? 700 : 500,
-                }}
-              >
-                {o.label}
-              </button>
-            );
-          })}
-        </div>
         {hasSeasonData && (
           <div
             className="flex items-center gap-1"

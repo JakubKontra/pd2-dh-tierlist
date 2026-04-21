@@ -7,6 +7,10 @@ interface Rule {
 }
 
 const rules: Rule[] = [
+  { pattern: /Holy Shock Multishot/i, cls: "Paladin", priority: 13 },
+  { pattern: /Holy Fire Exp Arrow/i, cls: "Paladin", priority: 13 },
+  { pattern: /Zeal Barb/i, cls: "Barbarian", priority: 13 },
+
   { pattern: /\bSentry\b/i, cls: "Assassin", priority: 10 },
   { pattern: /\bSen\b/i, cls: "Assassin", priority: 10 },
   { pattern: /Death Sentry/i, cls: "Assassin", priority: 10 },
@@ -113,7 +117,7 @@ const rules: Rule[] = [
   { pattern: /Multishot/i, cls: "Amazon", priority: 12 },
   { pattern: /Multiple Shot/i, cls: "Sorceress", priority: 12 },
   { pattern: /Exp Arrow/i, cls: "Amazon", priority: 12 },
-  { pattern: /Thorns Sacrifice/i, cls: "Amazon", priority: 12 },
+  { pattern: /Thorns Sacrifice/i, cls: "Paladin", priority: 12 },
   { pattern: /Lightning Fury/i, cls: "Amazon", priority: 10 },
   { pattern: /Lightning Strike/i, cls: "Amazon", priority: 10 },
   { pattern: /Power Strike/i, cls: "Amazon", priority: 10 },
