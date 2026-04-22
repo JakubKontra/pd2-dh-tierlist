@@ -9,6 +9,7 @@ import { RankedList } from "../components/lateGame/RankedList";
 import { BossLineup } from "../components/lateGame/BossLineup";
 import { MapImmunityTable } from "../components/lateGame/MapImmunityTable";
 import { MoversPanel } from "../components/lateGame/MoversPanel";
+import { TierDistributionHeatmap } from "../components/lateGame/TierDistributionHeatmap";
 
 function SectionHeading({ children }: { children: React.ReactNode }) {
   return (
@@ -75,6 +76,9 @@ export function LateGame() {
       />
 
       <LegendPanel lines={data.legend} />
+
+      <SectionHeading>At a Glance</SectionHeading>
+      <TierDistributionHeatmap tables={data.classTables} />
 
       <SectionHeading>Class Build Tiers</SectionHeading>
       <div className="grid grid-cols-1 xl:grid-cols-2 gap-4">
