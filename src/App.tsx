@@ -9,6 +9,7 @@ import { CompareFab } from "./components/CompareFab";
 import { useUrlSync } from "./hooks/useUrlSync";
 
 const Stats = lazy(() => import("./pages/Stats").then((m) => ({ default: m.Stats })));
+const LateGame = lazy(() => import("./pages/LateGame").then((m) => ({ default: m.LateGame })));
 
 function NavBar() {
   const linkCls = ({ isActive }: { isActive: boolean }) =>
@@ -40,6 +41,9 @@ function NavBar() {
         <nav className="flex items-center ml-auto">
           <NavLink to="/" end className={linkCls}>
             Tierlist
+          </NavLink>
+          <NavLink to="/late-game" className={linkCls}>
+            Late Game
           </NavLink>
           <NavLink to="/stats" className={linkCls}>
             Stats
@@ -126,6 +130,7 @@ function Shell() {
         <Suspense fallback={<LoadingState message="Loading charts…" />}>
           <Routes>
             <Route path="/" element={<Tierlist />} />
+            <Route path="/late-game" element={<LateGame />} />
             <Route path="/stats" element={<Stats />} />
             <Route path="/compare" element={<Compare />} />
             <Route path="/build/:id" element={<BuildDetail />} />

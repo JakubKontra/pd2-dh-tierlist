@@ -8,6 +8,7 @@ A fan-made interactive companion to the [PD2 Season 13 Build Tier List](https://
 
 ## Features
 
+- **Late-game mapping infographic** — DH's S13 late-game tier list at `/late-game` (per-class build tables, starter/boss-killer lineups, S13 map tiers & immunities)
 - **Live tier list** — tier cutoffs are recomputed from the sheet on every load
 - **Filters** — class filter, search, retested-only, handicap toggle (raw vs adjusted placement)
 - **Build detail** — top-3 T3 map runs, normalized MPM, per-map histogram

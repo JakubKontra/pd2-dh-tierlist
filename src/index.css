@@ -35,13 +35,18 @@
   --color-tier-f: #3a1515;
   --color-tier-fminus: #2a0a0a;
 
-  --color-class-amazon: #e8b661;
-  --color-class-assassin: #b06fbd;
-  --color-class-barbarian: #c4c4c4;
-  --color-class-druid: #7cb342;
-  --color-class-necromancer: #8a8a8a;
-  --color-class-paladin: #ffe082;
-  --color-class-sorceress: #64b5f6;
+  --color-flag-strong: #2e7d32;
+  --color-flag-good: #66bb6a;
+  --color-flag-ok: #fdd835;
+  --color-flag-none: #c62828;
+
+  --color-class-amazon: #3c7683;
+  --color-class-assassin: #9c446e;
+  --color-class-barbarian: #9c1a00;
+  --color-class-druid: #357abf;
+  --color-class-necromancer: #5f9e46;
+  --color-class-paladin: #8e8e8e;
+  --color-class-sorceress: #5c459d;
 
   --font-display: "Cinzel", "Trajan Pro", "Times New Roman", serif;
   --font-body: "Noto Sans", system-ui, -apple-system, sans-serif;
