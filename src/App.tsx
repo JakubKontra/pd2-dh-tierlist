@@ -10,6 +10,9 @@ import { useUrlSync } from "./hooks/useUrlSync";
 
 const Stats = lazy(() => import("./pages/Stats").then((m) => ({ default: m.Stats })));
 const LateGame = lazy(() => import("./pages/LateGame").then((m) => ({ default: m.LateGame })));
+const FarmingGuide = lazy(() =>
+  import("./pages/FarmingGuide").then((m) => ({ default: m.FarmingGuide }))
+);
 
 function NavBar() {
   const linkCls = ({ isActive }: { isActive: boolean }) =>
@@ -44,6 +47,9 @@ function NavBar() {
           </NavLink>
           <NavLink to="/late-game" className={linkCls}>
             Late Game
+          </NavLink>
+          <NavLink to="/farming-guide" className={linkCls}>
+            Farming Guide
           </NavLink>
           <NavLink to="/stats" className={linkCls}>
             Stats
@@ -131,6 +137,7 @@ function Shell() {
           <Routes>
             <Route path="/" element={<Tierlist />} />
             <Route path="/late-game" element={<LateGame />} />
+            <Route path="/farming-guide" element={<FarmingGuide />} />
             <Route path="/stats" element={<Stats />} />
             <Route path="/compare" element={<Compare />} />
             <Route path="/build/:id" element={<BuildDetail />} />
