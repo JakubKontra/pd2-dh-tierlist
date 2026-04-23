@@ -1,6 +1,7 @@
 import { useFarmingGuide, FARMING_GUIDE_SHEET_URL } from "../data/farmingGuide/fetchSheet";
 import { ErrorState, LoadingState } from "../components/LoadState";
 import { PageHero } from "../components/PageHero";
+import { RelatedGuides } from "../components/RelatedGuides";
 import { ProgressionSteps } from "../components/farmingGuide/ProgressionSteps";
 import { StarterBuildsGrid } from "../components/farmingGuide/StarterBuildsGrid";
 import { FarmingAreaTable } from "../components/farmingGuide/FarmingAreaTable";
@@ -40,6 +41,7 @@ export function FarmingGuide() {
           </>
         }
       />
+      <RelatedGuides current="farming-guide" />
 
       <SectionHeading>Solo Progression</SectionHeading>
       <ProgressionSteps steps={data.progression} />

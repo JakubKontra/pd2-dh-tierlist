@@ -13,6 +13,9 @@ const LateGame = lazy(() => import("./pages/LateGame").then((m) => ({ default: m
 const FarmingGuide = lazy(() =>
   import("./pages/FarmingGuide").then((m) => ({ default: m.FarmingGuide }))
 );
+const MercGuide = lazy(() =>
+  import("./pages/MercGuide").then((m) => ({ default: m.MercGuide }))
+);
 
 function NavBar() {
   const linkCls = ({ isActive }: { isActive: boolean }) =>
@@ -50,6 +53,9 @@ function NavBar() {
           </NavLink>
           <NavLink to="/farming-guide" className={linkCls}>
             Farming Guide
+          </NavLink>
+          <NavLink to="/mercenary-guide" className={linkCls}>
+            Merc Guide
           </NavLink>
           <NavLink to="/stats" className={linkCls}>
             Stats
@@ -138,6 +144,7 @@ function Shell() {
             <Route path="/" element={<Tierlist />} />
             <Route path="/late-game" element={<LateGame />} />
             <Route path="/farming-guide" element={<FarmingGuide />} />
+            <Route path="/mercenary-guide" element={<MercGuide />} />
             <Route path="/stats" element={<Stats />} />
             <Route path="/compare" element={<Compare />} />
             <Route path="/build/:id" element={<BuildDetail />} />

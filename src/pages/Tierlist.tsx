@@ -8,6 +8,7 @@ import { ErrorState, LoadingState } from "../components/LoadState";
 import { ShareButton } from "../components/ShareButton";
 import { ExportPngButton } from "../components/ExportPngButton";
 import { PageHero } from "../components/PageHero";
+import { RelatedGuides } from "../components/RelatedGuides";
 
 export function Tierlist() {
   const { data, loading, error, refetch } = useTierlist();
@@ -67,6 +68,7 @@ export function Tierlist() {
           </>
         }
       />
+      <RelatedGuides current="tierlist" />
       <div className="mb-4 flex justify-end gap-2" data-export-ignore>
         <ShareButton title="Copy link (preserves your class, search & handicap filters)" />
         <ExportPngButton targetRef={exportRef} filename="pd2-s13-tierlist.png" />

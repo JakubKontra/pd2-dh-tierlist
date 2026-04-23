@@ -3,6 +3,7 @@ import { useLateGame, LATE_GAME_SHEET_URL } from "../data/lateGame/fetchSheet";
 import { buildClassLookup } from "../data/lateGame/classLookup";
 import { ErrorState, LoadingState } from "../components/LoadState";
 import { PageHero } from "../components/PageHero";
+import { RelatedGuides } from "../components/RelatedGuides";
 import { LegendPanel } from "../components/lateGame/LegendPanel";
 import { ClassBuildTable } from "../components/lateGame/ClassBuildTable";
 import { RankedList } from "../components/lateGame/RankedList";
@@ -74,6 +75,7 @@ export function LateGame() {
           </>
         }
       />
+      <RelatedGuides current="late-game" />
 
       <LegendPanel lines={data.legend} />
 
