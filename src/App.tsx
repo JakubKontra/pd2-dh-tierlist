@@ -10,6 +10,9 @@ import { useUrlSync } from "./hooks/useUrlSync";
 
 const Stats = lazy(() => import("./pages/Stats").then((m) => ({ default: m.Stats })));
 const LateGame = lazy(() => import("./pages/LateGame").then((m) => ({ default: m.LateGame })));
+const LootFilterCreator = lazy(() =>
+  import("./pages/LootFilterCreator").then((m) => ({ default: m.LootFilterCreator }))
+);
 
 function NavBar() {
   const linkCls = ({ isActive }: { isActive: boolean }) =>
@@ -50,6 +53,9 @@ function NavBar() {
           </NavLink>
           <NavLink to="/compare" className={linkCls}>
             Compare
+          </NavLink>
+          <NavLink to="/loot-filter-creator" className={linkCls}>
+            Loot Filter
           </NavLink>
           <NavLink to="/about" className={linkCls}>
             About
@@ -133,6 +139,7 @@ function Shell() {
             <Route path="/late-game" element={<LateGame />} />
             <Route path="/stats" element={<Stats />} />
             <Route path="/compare" element={<Compare />} />
+            <Route path="/loot-filter-creator" element={<LootFilterCreator />} />
             <Route path="/build/:id" element={<BuildDetail />} />
             <Route path="/about" element={<About />} />
           </Routes>
