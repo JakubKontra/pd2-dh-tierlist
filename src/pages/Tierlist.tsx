@@ -9,6 +9,7 @@ import { ShareButton } from "../components/ShareButton";
 import { ExportPngButton } from "../components/ExportPngButton";
 import { PageHero } from "../components/PageHero";
 import { RelatedGuides } from "../components/RelatedGuides";
+import { TwitchEmbed } from "../components/TwitchEmbed";
 
 export function Tierlist() {
   const { data, loading, error, refetch } = useTierlist();
@@ -52,6 +53,7 @@ export function Tierlist() {
 
   return (
     <div>
+      <TwitchEmbed channel="darkhumility" />
       <PageHero
         title="Dark Humility"
         subtitle={
